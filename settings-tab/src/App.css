@@ -5,18 +5,20 @@
   padding: 64px;
 }
 
-.App-title {
-  margin: 8px 0px 24px;
-  font-weight: bold;
-  font-size: 40px;
-}
-
 .App-vibeBox {
   border: 3px solid black;
   border-radius: 24px;
   padding: 16px 32px;
   text-align: center;
 }
+
+.App-title {
+  margin: 8px 0px 24px;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+/**Classes for Inputs**/
 
 .App-fieldContainer {
   display: flex;
@@ -43,18 +45,44 @@ input {
   border: 1px solid black;
   height: 28px;
   padding: 0;
+  padding-left: 8px;
 }
 
 input:focus {
   outline: none;
 }
 
-
-.App-name {
-  width: 350px;
+.App-nameContainer {
+  position:relative;
+  text-align: center;
 }
 
+.App-name {
+  width: 342px;
+}
+
+.App-nameSubmit {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  border: 1px solid black;
+  height: 28px;
+  width: 64px;
+
+  background-color: #d4d4d4;
+  border-radius: 0px 8px 8px 0px;
+}
+
+.App-nameSubmit:hover {
+  background-color: #cacaca;
+}
+  
 .App-displayGroups{
   text-align: left;
   margin-bottom: 24px;
+}
+
+.App-group {
+  margin-bottom: 8px;
 }
