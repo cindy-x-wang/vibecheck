@@ -17,7 +17,6 @@ var options = {
    Authorization: 'Basic '+Buffer.from(client_id + ':' + client_secret).toString('base64')
   }
 };
-
   request(options, function(error, response, body) {
    if (error) throw new Error(error);
 

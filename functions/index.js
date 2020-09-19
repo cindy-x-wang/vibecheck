@@ -29,7 +29,7 @@ async function getAccessToken() {
     const docContent = await configDoc.get();
     if (docContent.exists) {
         const {tokens, date} = docContent.data();
-        if ((new Date()).getTime() - date.getTime() < tokens.expiry * 1000 ) {
+        if ((new Date()).getTime() - date.toDate().getTime() < tokens.expiry * 1000 ) {
            return tokens['access_token'] 
         } else {
             refresh_token_current = tokens['refresh_token']
