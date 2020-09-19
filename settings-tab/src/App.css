@@ -1,38 +1,60 @@
-.App {
+
+.App-container {
+  max-width: 625px;
+  margin: 0 auto;
+  padding: 64px;
+}
+
+.App-title {
+  margin: 8px 0px 24px;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.App-vibeBox {
+  border: 3px solid black;
+  border-radius: 24px;
+  padding: 16px 32px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-fieldContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  text-align: left;
+  margin-bottom: 32px;
+
 }
 
-.App-link {
-  color: #61dafb;
+.App-fields {
+  font-size: 24px;
+  font-weight: 500;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-inputContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid black;
+  height: 28px;
+  padding: 0;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+.App-name {
+  width: 350px;
+}
+
+.App-displayGroups{
+  text-align: left;
+  margin-bottom: 24px;
 }
