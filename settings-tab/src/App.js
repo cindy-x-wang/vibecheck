@@ -11,15 +11,74 @@ class App extends React.Component {
     this.state = {
       groupMembers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15],
       groupName: 'heckMIT',
+      name: '',
       groups: {
         'heckMIT':  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15],
         'herMIT': [1,2,3,4,5,6],
         'kerMIT': [2,3,4],
         'turNIP': [2, 4, 6, 10]
-      }
+      },
+      nameValue: '',
+      groupNameValue: '',
+      joinCodeValue: '',
+      createNameValue: '',
+      createCodeValue: '',
+
+
     }
 
+    this.nameChange = this.nameChange.bind(this);
+    this.groupNameChange = this.groupNameChange.bind(this);
+    this.joinCodeChange = this.joinCodeChange.bind(this);
+    this.createNameChange = this.createNameChange.bind(this);
+    this.createCodeChange = this.createCodeChange.bind(this);
+
+    this.createGroup = this.createGroup.bind(this);
+    this.joinGroup = this.joinGroup.bind(this);
   }
+
+  componentDidMount() {
+    // need an api call to retrieve all groups and respective members that the member is in
+  }
+
+  nameChange(event) {
+    this.setState({
+      nameValue: event.target.value,
+    });
+  }
+
+  groupNameChange (event) {
+    this.setState({
+      groupNameValue: event.target.value,
+    });
+  }
+
+  joinCodeChange (event) {
+    this.setState({
+      joinCodeValue: event.target.value,
+    });
+  }
+
+  createNameChange (event) {
+    this.setState({
+      createNameValue: event.target.value,
+    });
+  }
+
+  createCodeChange(event) {
+    this.setState({
+      createCodeValue: event.target.value,
+    });
+  }
+
+  joinGroup() {
+
+  }
+
+  createGroup() {
+
+  }
+
 
 
   render() {
@@ -40,7 +99,12 @@ class App extends React.Component {
             <div className='App-fieldContainer'> 
               <div className='App-fields'> screen name </div>
               <div className='App-nameContainer'>   
-                <input className='App-name'/>
+                <input 
+                  className='App-name'
+                  value={this.state.nameValue}
+                  onChange={this.nameChange}
+                  placeholder={this.state.name}
+                />
                 <div className='App-nameSubmit'> change </div>
               </div>
               
@@ -49,19 +113,45 @@ class App extends React.Component {
             <div className='App-fieldContainer'> 
               <div className='App-fields'> join new group </div>
               <div className='App-inputContainer'>
-                <input />
-                <input />               
+                <input 
+                  value={this.state.groupNameValue}
+                  onChange={this.groupNameChange}
+                  placeholder='enter group name'
+                />
+                <input 
+                  value={this.state.joinCodeValue}
+                  onChange={this.joinCodeChange}
+                  placeholder='enter join code'
+                />               
               </div>
             </div>
 
             <Group groupMembers={this.state.groupMembers} groupName={this.state.groupName} first={true}/>
 
-            <div className='App-fieldContainer' style={{marginTop: 32}}> 
+
+            <div className='App-buttonContainer'> 
+              <div className='App-button' onClick={this.joinGroup}> add me! </div>
+            </div>
+
+
+            <div className='App-fieldContainer' style={{marginTop: 32, marginBottom: 16}}> 
               <div className='App-fields'> create new group </div>
               <div className='App-inputContainer'>
-                <input />
-                <input />               
+                <input 
+                  value={this.state.createNameValue}
+                  onChange={this.createNameChange}
+                  placeholder='enter group name'
+                />
+                <input 
+                  value={this.state.createCodeValue}
+                  onChange={this.createCodeChange}
+                  placeholder='enter join code'
+                />               
               </div>
+            </div>
+
+            <div className='App-buttonContainer' style={{marginBottom: 32}}> 
+              <div className='App-button' onClick={this.createGroup}> create group </div>
             </div>
 
             <div className='App-displayGroups'> 

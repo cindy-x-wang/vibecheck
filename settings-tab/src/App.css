@@ -86,3 +86,25 @@ input:focus {
 .App-group {
   margin-bottom: 8px;
 }
+
+.App-buttonContainer {
+  height: 28px;
+  position: relative;
+  text-align: center;
+}
+
+.App-button {
+  padding: 0px 4px;
+  border-radius: 8px;
+  height: 28px;
+  background-color: #d4d4d4;
+
+
+  position: absolute;
+  right: 0;
+  border: 1px solid black;
+}
+
+.App-button:hover {
+  background-color: #cacaca;
+}
