@@ -1,0 +1,14 @@
+.Group-displayMembers {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    margin-bottom: 16px;
+}
+  
+.Group-groupTitle {
+    font-weight: 500;
+}
+
+  
+.Group-displayMembersContainer {
+    text-align: center;
+}
