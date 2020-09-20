@@ -190,6 +190,23 @@ async function unVibeAll() {
     }
 }
 
+async function createGroup(joinCode, displayName) {
+    await (await fetch("https://us-central1-vibecheck-hack.cloudfunctions.net/getZoomLink?groupcode=angy")).json()
+
+    const groupRef = db.collection("zoomgroups").doc(joinCode)
+    const existGroup = await groupRef.get()
+    if (existGroup.exists) {
+        alert('Group ' + joinCode + ' already exists!')
+        return
+    }
+    await groupRef.update({
+        "groupName": displayName
+    });
+
+    await subscribe(joinCode);
+    await vibeAll();
+}
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('b', request)
       if (request.audience !== "background") {
@@ -211,6 +228,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               break;
           case 'changeName':
               changeName(request.data.newName);
+              break;
+          case 'createGroup': 
+              createGroup(request.data.joinCode, request.data.displayName)
               break;
           default: 
             throw new Error('Unknown operation ' + request.operation)
