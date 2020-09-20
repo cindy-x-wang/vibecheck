@@ -3,6 +3,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import GroupCard from './GroupCard.js'
+import Checkbox from '@material-ui/core/Checkbox';
 
 class App extends React.Component {
 
@@ -37,7 +38,13 @@ handleCheck() {
         
         <div className="smallvibe"> I'm vibing! </div>
         <div className="smallvibe">
-          <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
+          {/* <Checkbox onChange={this.handleCheck} defaultChecked={this.state.checked}/> */}
+          <Checkbox
+            checked={this.state.checked}
+            onChange={this.handleCheck}
+            size="medium"
+            inputProps={{ 'aria-label': 'vibin checkbox' }}
+          />
         </div>
         
         <h2> my groups </h2>
