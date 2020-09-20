@@ -1,11 +1,18 @@
 {
-  "short_name": "React App",
-  "name": "Vibe Check",
-  "version": "1.0",
-  "manifest_version": 2,
-  "browser_action": {
-      "default_popup": "index.html",
-      "default_title": "vibe_ext"
-    },
-   "content_security_policy": "unsafe-inline"
-}
+    "short_name": "React App",
+    "name": "Vibe Check",
+    "version": "1.0",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_title": "vibe_ext"
+      },
+    "permissions": [
+        "storage",
+        "notifications"
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    }
+  }
