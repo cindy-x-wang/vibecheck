@@ -135,7 +135,7 @@ class App extends React.Component {
 
   createGroup() {
     console.log({joinCode: this.state.joinCodeValue, displayName: this.state.groupNameValue})
-    chrome.runtime.sendMessage({audience: "background", operation: "createGroup", data: {joinCode: this.state.joinCodeValue, displayName: this.state.groupNameValue}});
+    chrome.runtime.sendMessage({audience: "background", operation: "createGroup", data: {joinCode: this.state.createCodeValue, displayName: this.state.createNameValue}});
     this.setState({createNameValue: '', createCodeValue: ''});
   }
 
