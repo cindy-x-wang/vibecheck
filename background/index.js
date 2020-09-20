@@ -121,6 +121,17 @@ async function unsubscribe(groupname) {
     await groupRef.update({
         "everyone": firebase.firestore.FieldValue.arrayRemove(userId)
     });
+
+    chrome.storage.sync.get(['groupnames'], function (result) {
+        const newGroups = result.groupnames
+        newGroups.splice(newGroups.indexOf(groupname), 1)
+        chrome.storage.sync.set({
+            groupnames: newGroups
+        }, function() {
+            registerVibeGroups()
+        })
+    })
+
     console.log('Unsubscribe processed', notificationId)
 }
 
@@ -141,6 +152,14 @@ async function subscribe(groupname) {
     await groupRef.update({
         "everyone": firebase.firestore.FieldValue.arrayUnion(userId)
     });
+
+    chrome.storage.sync.get(['groupnames'], function (result) {
+        chrome.storage.sync.set({
+            groupnames: [...result.groupnames, groupname]
+        }, function() {
+            registerVibeGroups()
+        })
+    })
 
     await vibeGroup(groupname)
 }
