@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Group from './Group.js';
+import { FaSignOutAlt } from 'react-icons/fa';
 import firebase from './Firestore.js';
 
 const db = firebase.firestore();
@@ -140,7 +141,17 @@ class App extends React.Component {
     let first = true;
     let groups = [];
     for(const [groupName, groupMembers] of Object.entries(this.state.groups)) {
-      groups.push(<Group groupMembers={groupMembers} groupName={groupName} first={first}/>);
+      groups.push(
+        <div className='App-single-group'>
+          <Group groupMembers={groupMembers} groupName={groupName} first={first}/>
+          <div
+            className='App-group-leave'
+            // onClick={}
+          >
+            <FaSignOutAlt/>
+          </div>
+        </div>
+      );
       first = false;  
     }
 
@@ -211,6 +222,14 @@ class App extends React.Component {
             <div className='App-displayGroups'> 
               <div className='App-fields App-group'> your current groups </div>
               {groups}
+              {/* {Object.keys(this.state.groups).map((key) => {
+                return (
+                  <div className='group-div'>
+                    <div className='group-name'> {key} </div>
+                    <div className='group-members'> {this.state.groups[key]} </div>
+                  </div>
+                )
+              })} */}
             </div>
 
 
