@@ -4,9 +4,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Group from './Group.js';
-import firebase from './Firestore.js';
 
-const db = firebase.firestore();
 
 
 class App extends React.Component {
@@ -39,7 +37,7 @@ class App extends React.Component {
     this.createNameChange = this.createNameChange.bind(this);
     this.createCodeChange = this.createCodeChange.bind(this);
 
-    //this.createGroup = this.createGroup.bind(this);
+    this.createGroup = this.createGroup.bind(this);
     this.joinGroup = this.joinGroup.bind(this);
 
   }
@@ -91,6 +89,12 @@ class App extends React.Component {
 
   joinGroup() {
     chrome.runtime.sendMessage({audience: "background", operation: "subscribe", data: {groupname: this.state.groupNameValue}});
+  }
+
+  createGroup() {
+    chrome.runtime.sendMessage({audience: "background", operation: "createGroup", data: {joinCode: this.state.joinCodeValue, displayName: this.state.groupNameValue}});
+    this.setState({createNameValue: '', createCodeValue: ''});
+
   }
 
 
