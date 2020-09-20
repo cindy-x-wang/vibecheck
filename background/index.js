@@ -23,7 +23,7 @@ let latestGroupData = {}
 let userId;
 
 function registerVibeGroups() {
-    chrome.storage.sync.get(['userId', 'groupnames'], function(result) {
+    chrome.storage.sync.get(['userId', 'groupnames'], async function(result) {
         if (!result.userId) {
             // register user 
             userId = uuidv4(); 
@@ -44,8 +44,10 @@ function registerVibeGroups() {
                 continue;
             }
             groupListening.push(groupname);
-            db.collection("zoomgroups").doc(groupname)
-            .onSnapshot(function(doc) {
+            const groupRef = db.collection("zoomgroups").doc(groupname)
+            const data = (await groupRef.get()).data()
+            latestGroupData[groupname] = data;
+            groupRef.onSnapshot(function(doc) {
                 const data = doc.data();
                 console.log(groupname, data);
                 latestGroupData[groupname] = data;
@@ -113,10 +115,10 @@ async function handleVibe(notificationId, buttonIndex = 0) {
 }
 
 async function unsubscribe(groupname) {
-    console.log('Unsubscribe request', notificationId)
+    console.log('Unsubscribe request', groupname)
     const groupRef = db.collection("zoomgroups").doc(groupname)
     // must unvibe first before reduce everyone, to prevent false notifications for others 
-    await unvibeGroup(groupName)
+    await unvibeGroup(groupname)
 
     await groupRef.update({
         "everyone": firebase.firestore.FieldValue.arrayRemove(userId)
@@ -132,7 +134,7 @@ async function unsubscribe(groupname) {
         })
     })
 
-    console.log('Unsubscribe processed', notificationId)
+    console.log('Unsubscribe processed', groupname)
 }
 
 async function changeName(newName) {
@@ -191,7 +193,7 @@ async function unVibeAll() {
 }
 
 async function createGroup(joinCode, displayName) {
-    await (await fetch("https://us-central1-vibecheck-hack.cloudfunctions.net/getZoomLink?groupcode=angy")).json()
+    await (await fetch("https://us-central1-vibecheck-hack.cloudfunctions.net/getZoomLink?groupcode=" + joinCode)).json()
 
     const groupRef = db.collection("zoomgroups").doc(joinCode)
     const existGroup = await groupRef.get()
@@ -231,6 +233,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               break;
           case 'createGroup': 
               createGroup(request.data.joinCode, request.data.displayName)
+              break;
+          case 'fetchLatestGroupData': 
+              sendResponse({
+                latestGroupData: latestGroupData
+              })
               break;
           default: 
             throw new Error('Unknown operation ' + request.operation)

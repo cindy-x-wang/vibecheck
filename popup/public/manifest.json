@@ -9,7 +9,8 @@
       },
     "permissions": [
         "storage",
-        "notifications"
+        "notifications",
+        "https://us-central1-vibecheck-hack.cloudfunctions.net/*"
     ],
     "background": {
         "scripts": ["background.js"],

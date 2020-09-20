@@ -11,15 +11,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       myGroups: ['hi','hello'],
+      myGroupNames: [],
       checked: false,
     };
     this.handleCheck = this.handleCheck.bind(this)
     this.getGroups = this.getGroups.bind(this)
+    const reactThis = this 
     chrome.storage.onChanged.addListener(function (changes, areaname) {
       if (areaname !== "sync") {
           return;
       }
-      this.getGroups()
+      reactThis.getGroups()
     })
     this.getGroups()
   }
@@ -33,9 +35,23 @@ handleCheck() {
 }
 
 getGroups(){
+  const reactThis = this
   chrome.storage.sync.get(['groupnames'], function (result) {
     console.log(result.groupnames)
-    this.setState({myGroups: result.groupnames})
+    chrome.runtime.sendMessage({audience: 'background', operation: 'fetchLatestGroupData'}, function(response) {
+      console.log(response.latestGroupData);
+      let bothGroupNames = []
+      for (const groupnametoquery of result.groupnames) {
+        bothGroupNames.push(
+          {
+            joinCode: groupnametoquery,
+            localName: response.latestGroupData[groupnametoquery].groupName
+          }
+        )
+      }
+      reactThis.setState({myGroups: result.groupnames, myGroupNames: bothGroupNames})
+    });
+    
 })
 }
 
@@ -71,8 +87,8 @@ openSettings() {
         
         <h2> my groups </h2>
         <div>
-          {this.state.myGroups.map(g =>
-            <GroupCard name={g}/>
+          {this.state.myGroupNames.map(g =>
+            <GroupCard joinCode={g.joinCode} localName={g.localName}/>
           )}
         </div>
         </div>
