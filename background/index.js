@@ -56,7 +56,7 @@ function registerVibeGroups() {
                 if (!available || !everyone) {
                     return
                 }
-                if (available.length / everyone.length > 0.7) {
+                if (available.length / everyone.length > 0.7 && available.length > 1) {
                     // let's vibe!!!
                     chrome.notifications.create(groupname, {
                         type: 'basic',
