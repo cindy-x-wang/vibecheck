@@ -6,6 +6,6 @@
   "browser_action": {
       "default_popup": "index.html",
       "default_title": "vibe_ext"
-    }
-   
+    },
+   "content_security_policy": "unsafe-inline"
 }
