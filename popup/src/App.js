@@ -15,9 +15,18 @@ class App extends React.Component {
       <>
         <div className='App-container'> 
           <div className='App-vibeBox'> 
-            Hello World!
+            Vibe Check!
           </div>
         </div>
+        <h1> Vibe Check! </h1>
+        <div> Im vibing! </div>
+        <input type="checkbox"/>
+        <h2> current groups </h2>
+        <a> 
+        <span>
+            llama
+        </span>
+        </a>
 
       </>
     );
