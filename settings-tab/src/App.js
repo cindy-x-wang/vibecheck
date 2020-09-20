@@ -4,7 +4,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Group from './Group.js';
-
+import firebase from './Firestore'
 
 
 class App extends React.Component {
@@ -13,14 +13,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       email: 'helenlu2001@gmail.com',
-      groupMembers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15],
-      groupName: 'heckMIT',
+      groupMembers: [],
+      groupName: '',
       name: '',
       groups: {
-        'heckMIT':  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15],
-        'herMIT': [1,2,3,4,5,6],
-        'kerMIT': [2,3,4],
-        'turNIP': [2, 4, 6, 10]
       },
       nameValue: '',
       groupNameValue: '',
@@ -40,10 +36,54 @@ class App extends React.Component {
     this.createGroup = this.createGroup.bind(this);
     this.joinGroup = this.joinGroup.bind(this);
 
+    this.getGroups = this.getGroups.bind(this);
+    this.changeName = this.changeName.bind(this);
+
+  }
+
+  getGroups(){
+    const reactThis = this
+    chrome.storage.sync.get(['groupnames', 'userId'],async function (result) {
+      console.log(result.groupnames)
+      const myUserRef = firebase.firestore().collection('users').doc(result.userId)
+      const myUserContent = await myUserRef.get()
+      if (myUserContent.exists) {
+        reactThis.setState({
+          nameValue: myUserContent.data().name || ""
+        })
+      }
+      chrome.runtime.sendMessage({audience: 'background', operation: 'fetchLatestGroupData'}, async function(response) {
+        console.log(response.latestGroupData);
+        let groups = {}
+        for (const groupnametoquery of result.groupnames) {
+          const peopleUuids = response.latestGroupData[groupnametoquery].everyone || []
+          const people = await Promise.all(peopleUuids.map(async (a) => {
+            const userRef = firebase.firestore().collection('users').doc(a)
+            const userData = await userRef.get();
+            if (userData.exists) {
+              return userData.data().name
+            }
+            return 'User ' + a.substring(0,8)
+          }))
+          groups[groupnametoquery] = people
+        }
+        reactThis.setState({groups:groups})
+      });
+      
+  })
   }
 
   componentDidMount() {
     // need an api call to retrieve all groups and respective members that the member is in
+    const reactThis = this 
+    chrome.storage.onChanged.addListener(function (changes, areaname) {
+      if (areaname !== "sync") {
+          return;
+      }
+      reactThis.getGroups()
+    })
+    this.getGroups();
+    
   }
 
   nameChange(event) {
@@ -65,6 +105,7 @@ class App extends React.Component {
       joinCodeValue: event.target.value,
     });
     console.log(event.target.value);
+    console.log(this.state)
   }
 
   createNameChange (event) {
@@ -88,14 +129,24 @@ class App extends React.Component {
   }
 
   joinGroup() {
-    chrome.runtime.sendMessage({audience: "background", operation: "subscribe", data: {groupname: this.state.groupNameValue}});
+    chrome.runtime.sendMessage({audience: "background", operation: "subscribe", data: {groupname: this.state.joinCodeValue}});
     this.setState({joinCodeValue: ''});
   }
 
   createGroup() {
+    console.log({joinCode: this.state.joinCodeValue, displayName: this.state.groupNameValue})
     chrome.runtime.sendMessage({audience: "background", operation: "createGroup", data: {joinCode: this.state.joinCodeValue, displayName: this.state.groupNameValue}});
     this.setState({createNameValue: '', createCodeValue: ''});
+  }
 
+  changeName() {
+    const reactThis = this
+    chrome.storage.sync.get(['groupnames', 'userId'],async function (result) {
+      const myUserRef = firebase.firestore().collection('users').doc(result.userId)
+      await myUserRef.set({
+        name: reactThis.state.nameValue
+      })
+    })
   }
 
   render() {
@@ -104,7 +155,7 @@ class App extends React.Component {
     for(const [groupName, groupMembers] of Object.entries(this.state.groups)) {
       groups.push(
         <div className='App-single-group'>
-          <Group groupMembers={groupMembers} groupName={groupName} first={first}/>
+          <Group groupMembers={groupMembers} groupName={groupName} first={first} />
           <div
             className='App-group-leave'
             // onClick={}
@@ -130,7 +181,7 @@ class App extends React.Component {
                   onChange={this.nameChange}
                   placeholder={this.state.name}
                 />
-                <div className='App-nameSubmit'> change </div>
+                <div className='App-nameSubmit' onClick={this.changeName}> change </div>
               </div>
               
             </div>
@@ -144,17 +195,17 @@ class App extends React.Component {
                   onChange={this.joinCodeChange}
                   placeholder='enter join code'
                 />
-                <div className='App-nameSubmit'> join! </div>
+                <div className='App-nameSubmit' onClick={this.joinGroup}> join! </div>
              </div>
             </div>
 
 
-            <Group groupMembers={this.state.groupMembers} groupName={this.state.groupName} first={true}/>
+            {/* <Group groupMembers={this.state.groupMembers} groupName={this.state.groupName} first={true}/>
 
 
             <div className='App-buttonContainer'> 
               <div className='App-button' onClick={this.joinGroup}> add me! </div>
-            </div>
+            </div> */}
 
 
             <div className='App-fieldContainer' style={{marginTop: 32, marginBottom: 16}}> 
