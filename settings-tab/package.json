@@ -2,10 +2,12 @@
   "name": "settings-tab",
   "version": "0.1.0",
   "private": true,
+  "homepage": "settings",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "firebase": "^7.21.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
