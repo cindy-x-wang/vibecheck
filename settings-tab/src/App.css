@@ -6,6 +6,10 @@ body {
   background-repeat: no-repeat;
 }
 
+div {
+  color: rgb(255, 85, 85);
+}
+
 .App-container {
   max-width: 625px;
   margin: 0 auto;
@@ -13,7 +17,7 @@ body {
 }
 
 .App-vibeBox {
-  border: 3px solid rgb(162, 7, 23);
+  border: 3px solid rgb(255, 226, 99);
   border-radius: 24px;
   background-color: rgba(255, 196, 196, 0.9);
 
@@ -51,7 +55,8 @@ body {
 
 input {
   border-radius: 8px;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 226, 99);
+  ;
   height: 28px;
   padding: 0;
   padding-left: 8px;
@@ -75,16 +80,16 @@ input:focus {
   top: 0;
   right: 0;
 
-  border: 1px solid black;
+  border: 1px solid rgb(255, 226, 99);
   height: 28px;
   width: 64px;
 
-  background-color: #d4d4d4;
+  background-color: rgb(255, 233, 133);
   border-radius: 0px 8px 8px 0px;
 }
 
 .App-nameSubmit:hover {
-  background-color: #cacaca;
+  background-color: rgb(255, 226, 99);
 }
   
 .App-displayGroups{
@@ -120,16 +125,16 @@ input:focus {
   padding: 0px 4px;
   border-radius: 8px;
   height: 28px;
-  background-color: #d4d4d4;
+  background-color: rgb(255, 233, 133);
 
 
   position: absolute;
   right: 0;
-  border: 1px solid black;
+  border: 1px solid  rgb(255, 226, 99);
 }
 
 .App-button:hover {
-  background-color: #cacaca;
+  background-color:  rgb(255, 226, 99);
 }
 /* 
 .group-div {
