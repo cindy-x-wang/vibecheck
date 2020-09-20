@@ -107,7 +107,6 @@ class App extends React.Component {
           <Group groupMembers={groupMembers} groupName={groupName} first={first}/>
           <div
             className='App-group-leave'
-            // onClick={}
           >
           </div>
         </div>
@@ -144,18 +143,12 @@ class App extends React.Component {
                   onChange={this.joinCodeChange}
                   placeholder='enter join code'
                 />
-                <div className='App-nameSubmit'> join! </div>
+                <div className='App-nameSubmit' onClick={this.joinGroup}> join! </div>
              </div>
             </div>
 
 
             <Group groupMembers={this.state.groupMembers} groupName={this.state.groupName} first={true}/>
-
-
-            <div className='App-buttonContainer'> 
-              <div className='App-button' onClick={this.joinGroup}> add me! </div>
-            </div>
-
 
             <div className='App-fieldContainer' style={{marginTop: 32, marginBottom: 16}}> 
               <div className='App-fields'> create new group </div>
@@ -180,14 +173,7 @@ class App extends React.Component {
             <div className='App-displayGroups'> 
               <div className='App-fields App-group'> your current groups </div>
               {groups}
-              {/* {Object.keys(this.state.groups).map((key) => {
-                return (
-                  <div className='group-div'>
-                    <div className='group-name'> {key} </div>
-                    <div className='group-members'> {this.state.groups[key]} </div>
-                  </div>
-                )
-              })} */}
+              
             </div>
 
 
