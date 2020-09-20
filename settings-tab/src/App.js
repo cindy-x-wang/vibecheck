@@ -98,7 +98,7 @@ class App extends React.Component {
     userRef.get().then((doc) => {
       if(doc.exists) {
         let newgroups = doc.data()['groups'];
-        newgroups.push(id);
+        newgroups.push('id');
         userRef.set({
           groups: newgroups,
           name: doc.data()['name']
