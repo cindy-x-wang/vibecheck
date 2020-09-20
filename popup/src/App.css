@@ -7,6 +7,28 @@
   pointer-events: none;
 }
 
+.extension-container {
+  min-width: 380px;
+  margin: 12px;
+}
+
+.App-title {
+  margin: 8px 0px 24px;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
+
+.smallvibe {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
