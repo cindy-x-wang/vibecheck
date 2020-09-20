@@ -89,6 +89,7 @@ class App extends React.Component {
 
   joinGroup() {
     chrome.runtime.sendMessage({audience: "background", operation: "subscribe", data: {groupname: this.state.groupNameValue}});
+    this.setState({joinCodeValue: ''});
   }
 
   createGroup() {
@@ -96,55 +97,6 @@ class App extends React.Component {
     this.setState({createNameValue: '', createCodeValue: ''});
 
   }
-
-
-  /**
-  joinGroup() {
-  
-    const groupRef = db.collection("zoomgroups");
-    groupRef.where('groupName', '==', this.state.groupNameValue, '&&') 
-
-    const userRef = db.collection("users").doc(this.state.email);
-    userRef.get().then((doc) => {
-      if(doc.exists) {
-        let newgroups = doc.data()['groups'];
-        newgroups.push('id');
-        userRef.set({
-          groups: newgroups,
-          name: doc.data()['name']
-        });
-      }
-    })
-  }
-  */
-
-  /*
-  createGroup() {
-    let id = db.collection("zoomgroups").doc().id;
-
-    const groupRef = db.collection("zoomgroups").doc(id).set({
-      groupName: this.state.createNameValue,
-      joinCode: this.state.createCodeValue,
-      link: 'some random zoom link'
-    });
-
-    const userRef = db.collection("users").doc(this.state.email);
-    userRef.get().then((doc) => {
-      if(doc.exists) {
-        let newgroups = doc.data()['groups'];
-        newgroups.push(id);
-        console.log(newgroups);
-        console.log(doc.data()['name']);
-        userRef.set({
-          groups: newgroups,
-          name: doc.data()['name']
-        });
-      }
-    })
-    this.setState({createNameValue: '', createCodeValue: ''});
-  }
-
-  */
 
   render() {
     let first = true;
@@ -185,19 +137,17 @@ class App extends React.Component {
 
             <div className='App-fieldContainer'> 
               <div className='App-fields'> join new group </div>
-              <div className='App-inputContainer'>
+              <div className='App-nameContainer'>   
                 <input 
-                  value={this.state.groupNameValue}
-                  onChange={this.groupNameChange}
-                  placeholder='enter group name'
-                />
-                <input 
+                  className='App-name'
                   value={this.state.joinCodeValue}
                   onChange={this.joinCodeChange}
                   placeholder='enter join code'
-                />               
-              </div>
+                />
+                <div className='App-nameSubmit'> join! </div>
+             </div>
             </div>
+
 
             <Group groupMembers={this.state.groupMembers} groupName={this.state.groupName} first={true}/>
 
