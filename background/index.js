@@ -191,6 +191,7 @@ async function unVibeAll() {
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log('b', request)
       if (request.audience !== "background") {
           return
       }
