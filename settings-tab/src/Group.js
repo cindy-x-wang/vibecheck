@@ -7,21 +7,36 @@ class Group extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      showMembers: false,
     }
 
+    this.toggleShowMembers = this.toggleShowMembers.bind(this);
+
+  }
+
+  toggleShowMembers() {
+    this.setState({
+      showMembers: !this.state.showMembers,
+    });
   }
 
 
   render() {
     return (
       <>
-        <div className='Group-displayMembersContainer'>
-          <div className='Group-groupTitle'> people in {this.props.groupName} </div>
+        <div 
+          className='Group-displayMembersContainer'
+          onClick={this.toggleShowMembers}
+        >
+          <div className='Group-groupTitle'> {this.props.groupName} </div>
           <hr/>
-          <div className='Group-displayMembers'> 
-            {this.props.groupMembers.map((e) => <div> {e} </div>)}
-          </div>
+          { this.state.showMembers ? 
+            <div className='Group-displayMembers'> 
+              {this.props.groupMembers.map((e) => <div> {e} </div>)}
+            </div>
+            :
+            <div></div>
+          }   
         </div>
       </>
     );

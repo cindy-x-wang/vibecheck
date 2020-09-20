@@ -87,6 +87,20 @@ input:focus {
   margin-bottom: 8px;
 }
 
+.App-single-group {
+  /* width: 90%; */
+  /* align-self: flex-start;
+  display: flex;
+  flex-direction: row; */
+}
+
+.App-group-leave {
+  /* width: 10%; */
+  align-self: flex-end;
+  cursor: pointer;
+  justify-self: flex-start;
+}
+
 .App-buttonContainer {
   height: 28px;
   position: relative;
@@ -108,3 +122,12 @@ input:focus {
 .App-button:hover {
   background-color: #cacaca;
 }
+/* 
+.group-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-name {
+  text-align: left;
+} */
