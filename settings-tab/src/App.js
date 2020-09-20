@@ -1,8 +1,9 @@
+/*global chrome*/
+
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Group from './Group.js';
-import { FaSignOutAlt } from 'react-icons/fa';
 import firebase from './Firestore.js';
 
 const db = firebase.firestore();
@@ -38,7 +39,7 @@ class App extends React.Component {
     this.createNameChange = this.createNameChange.bind(this);
     this.createCodeChange = this.createCodeChange.bind(this);
 
-    this.createGroup = this.createGroup.bind(this);
+    //this.createGroup = this.createGroup.bind(this);
     this.joinGroup = this.joinGroup.bind(this);
 
   }
@@ -89,11 +90,16 @@ class App extends React.Component {
   }
 
   joinGroup() {
-    /** verify that the given group is valid */
+    chrome.runtime.sendMessage({audience: "background", operation: "subscribe", data: {groupname: this.state.groupNameValue}});
+  }
+
+
+  /**
+  joinGroup() {
+  
     const groupRef = db.collection("zoomgroups");
     groupRef.where('groupName', '==', this.state.groupNameValue, '&&') 
-    // incomplete
-    /** update the user's groups to include the newly added group */
+
     const userRef = db.collection("users").doc(this.state.email);
     userRef.get().then((doc) => {
       if(doc.exists) {
@@ -106,10 +112,10 @@ class App extends React.Component {
       }
     })
   }
+  */
 
-
+  /*
   createGroup() {
-    /** create the group in the zoom groups collection */
     let id = db.collection("zoomgroups").doc().id;
 
     const groupRef = db.collection("zoomgroups").doc(id).set({
@@ -118,7 +124,6 @@ class App extends React.Component {
       link: 'some random zoom link'
     });
 
-    /** update the user's groups to include the newly added group */
     const userRef = db.collection("users").doc(this.state.email);
     userRef.get().then((doc) => {
       if(doc.exists) {
@@ -135,7 +140,7 @@ class App extends React.Component {
     this.setState({createNameValue: '', createCodeValue: ''});
   }
 
-
+  */
 
   render() {
     let first = true;
@@ -148,7 +153,6 @@ class App extends React.Component {
             className='App-group-leave'
             // onClick={}
           >
-            <FaSignOutAlt/>
           </div>
         </div>
       );
