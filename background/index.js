@@ -56,7 +56,7 @@ function registerVibeGroups() {
                 if (!available || !everyone) {
                     return
                 }
-                if (available.length / everyone.length > 0.7) {
+                if (available.length / everyone.length > 0.7 && available.length > 1) {
                     // let's vibe!!!
                     chrome.notifications.create(groupname, {
                         type: 'basic',
@@ -197,13 +197,15 @@ async function createGroup(joinCode, displayName) {
 
     const groupRef = db.collection("zoomgroups").doc(joinCode)
     const existGroup = await groupRef.get()
-    if (existGroup.exists) {
+    if (existGroup.data().groupName) {
         alert('Group ' + joinCode + ' already exists!')
         return
     }
     await groupRef.update({
         "groupName": displayName
     });
+
+    latestGroupData[joinCode] = (await groupRef.get()).data()
 
     await subscribe(joinCode);
     await vibeAll();
