@@ -205,6 +205,8 @@ async function createGroup(joinCode, displayName) {
         "groupName": displayName
     });
 
+    latestGroupData[joinCode] = (await groupRef.get()).data()
+
     await subscribe(joinCode);
     await vibeAll();
 }
