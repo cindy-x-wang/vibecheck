@@ -197,7 +197,7 @@ async function createGroup(joinCode, displayName) {
 
     const groupRef = db.collection("zoomgroups").doc(joinCode)
     const existGroup = await groupRef.get()
-    if (existGroup.exists) {
+    if (existGroup.data().groupName) {
         alert('Group ' + joinCode + ' already exists!')
         return
     }
