@@ -149,7 +149,15 @@ async function changeName(newName) {
 }
 
 async function subscribe(groupname) {
+    if (groupListening.map(a=>a.toLowerCase()).includes(groupname.toLowerCase())) {
+        alert('You are already in the group')
+        return
+    }
     const groupRef = db.collection("zoomgroups").doc(groupname)
+    if (!(await groupRef.get()).exists) {
+        alert('The join code is incorrect. ')
+        return
+    }
 
     await groupRef.update({
         "everyone": firebase.firestore.FieldValue.arrayUnion(userId)

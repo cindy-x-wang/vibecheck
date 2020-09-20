@@ -10,10 +10,25 @@
   
 .Group-groupTitle {
     font-weight: 500;
+    font-size: 16px;
     text-align: left;
     cursor: pointer;
-    width: 90%;
+    width: 550px;
     align-self: flex-start;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.leaveGroupContainer{
+    /* margin: 6px; */
+    align-self: end;
+    opacity: .6;
+}
+
+.leaveGroupContainer:hover{
+    opacity:1;
+    cursor: pointer;
 }
 
 /* .Group-groupLeave {
