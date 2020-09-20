@@ -124,6 +124,17 @@ async function unsubscribe(groupname) {
     console.log('Unsubscribe processed', notificationId)
 }
 
+async function changeName(newName) {
+    const userRef = db.collection("users").doc(userId);
+    userRef.get().then((doc) => {
+      if(doc.exists) {
+        userRef.set({
+          name: newName
+        });
+      }
+    })
+}
+
 async function subscribe(groupname) {
     const groupRef = db.collection("zoomgroups").doc(groupname)
 
@@ -150,13 +161,13 @@ async function vibeGroup(groupname) {
 
 async function vibeAll() {
     for (const groupname of groupListening) {
-        vibeGroup(groupname)
+        await vibeGroup(groupname)
     }
 }
 
 async function unVibeAll() {
     for (const groupname of groupListening) {
-        unvibeGroup(groupname)
+        await unvibeGroup(groupname)
     }
 }
 
@@ -177,6 +188,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
           case 'unsubscribe':
               unsubscribe(request.data.groupname);
+              break;
+          case 'changeName':
+              changeName(request.data.newName);
               break;
           default: 
             throw new Error('Unknown operation ' + request.operation)
