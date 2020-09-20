@@ -27,6 +27,18 @@
   justify-content: center;
 }
 
+.settings-icon {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px;
+  opacity: .6;
+}
+
+.settings-icon:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 
 
 @media (prefers-reduced-motion: no-preference) {
