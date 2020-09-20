@@ -28,3 +28,9 @@
 .Group-displayMembersContainer {
     text-align: center;
 }
+
+.Group-underline {
+    border: 1px solid rgba(236, 167, 75, 0.802);
+    background-color: rgba(236, 167, 75, 0.802);
+  }
+  

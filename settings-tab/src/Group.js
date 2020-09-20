@@ -29,7 +29,7 @@ class Group extends React.Component {
           onClick={this.toggleShowMembers}
         >
           <div className='Group-groupTitle'> {this.props.groupName} </div>
-          <hr/>
+          <hr className='Group-underline'/>
           { this.state.showMembers ? 
             <div className='Group-displayMembers'> 
               {this.props.groupMembers.map((e) => <div> {e} </div>)}
